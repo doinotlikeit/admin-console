@@ -10,6 +10,8 @@ debugout.log
 .DS_Store
 node_modules/
 springboot-server/build/
+vue-ui/dist
+vue-ui/dist/*
 npm-debug.log
 yarn-error.log
 test/unit/coverage

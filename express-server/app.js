@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use(express.static('../vue-ui/dist'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,3 +45,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+app.listen(8080, function() {
+  console.log('App listening on port 8080!');
+});
