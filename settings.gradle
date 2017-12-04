@@ -1,0 +1,3 @@
+rootProject.name = 'prod-catalogue-ui'
+// include 'ui', 'server'
+include 'server'
