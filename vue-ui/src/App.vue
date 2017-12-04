@@ -4,6 +4,7 @@
 
 <script>
   import {auth} from './main'
+
   export default {
     name: 'app',
     data () {
@@ -25,10 +26,10 @@
     created: function () {
       console.log('===> App component created ...')
     }
-}
+  }
 </script>
 
-<style>
+<style lang="scss">
   /* Import Font Awesome Icons Set */
   $fa-font-path: '~font-awesome/fonts/';
   @import '~font-awesome/css/font-awesome.min.css';
