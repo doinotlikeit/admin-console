@@ -1,6 +1,4 @@
 /target/
-/build/
-build
 .gradle
 .idea
 .classpath
@@ -11,11 +9,10 @@ debugout.log
 *.log
 .DS_Store
 node_modules/
-dist/
+springboot-server/build/
 npm-debug.log
 yarn-error.log
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log
-auth0-variables.js
 .env
