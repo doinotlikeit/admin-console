@@ -31,11 +31,11 @@ bootRun {
 jar {
     baseName = "${project.properties.group}.${rootProject.name}"
     version = version
-    from('../vue-helloworld/dist/') {
+    from('../vue-ui/dist/') {
         include '**/*.*'
         into 'static'
     }
-    from('../vue-helloworld/dist/') {
+    from('../vue-ui/dist/') {
         include '*.html'
         into 'static'
     }
