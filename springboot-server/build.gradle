@@ -26,6 +26,7 @@ sourceCompatibility = 1.8
 
 bootRun {
     addResources = true
+    systemProperties = System.properties
 }
 
 jar {
@@ -41,12 +42,11 @@ jar {
     }
 }
 
-project.mainClassName = 'com.its.demo.prodcatalogue.ui.server.SpringbootApp'
+project.mainClassName = 'com.its.demo.adminconsole.ui.server.SpringbootApp'
 
 
 dependencies {
-    // Use Scala 2.11 in our library project
-    compile 'org.scala-lang:scala-library:2.11.7'
+    compile 'org.scala-lang:scala-library:2.12.4'
 
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.boot:spring-boot-starter-tomcat")

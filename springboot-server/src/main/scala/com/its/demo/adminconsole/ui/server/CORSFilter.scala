@@ -1,5 +1,4 @@
-package com.its.demo.prodcatalogue.ui.server
-
+package com.its.demo.adminconsole.ui.server
 
 import javax.servlet._
 import javax.servlet.http.HttpServletResponse

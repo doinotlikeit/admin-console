@@ -1,4 +1,4 @@
-package com.its.demo.prodcatalogue.ui.server
+package com.its.demo.adminconsole.ui.server
 
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringApplication
