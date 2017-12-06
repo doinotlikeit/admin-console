@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js'
 import {AUTH_CONFIG} from './auth0-variables'
 import EventEmitter from 'EventEmitter'
+import * as main from '@/main'
 
 // const axios = require('axios')
 
@@ -29,15 +30,15 @@ export default class AuthService {
     this.auth0.authorize()
   }
 
-  handleAuthentication (handleAuthError) {
+  handleAuthentication (component) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
         console.log('===> AuthService: Authenticated, accessToken: ' + authResult.accessToken)
         this.authNotifier.emit('authChange', {authenticated: true})
       } else if (err) {
-        console.log('===> AuthService: Auth0 auth failure' + err)
-        handleAuthError(err)
+        console.log('===> AuthService: Auth0 auth failure: ' + err)
+        main.handleAuthError(component, "Couldn't to authenticate via Auth0: \n\n" + JSON.stringify(err))
       }
     })
   }

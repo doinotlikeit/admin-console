@@ -4,18 +4,15 @@
     <p/>
     <p/>
     <div class="col text-center">
-      <p>You can login using LinkedIn credentials</p>
+      <p>Please login to continue</p>
       <b-btn variant="primary" @click="auth.login()">Login</b-btn>
     </div>
   </b-jumbotron>
 </template>
 
 <script>
-  import BaseComponent from '@/components/BaseComponent'
-
   export default {
     name: 'Welcome',
-    extends: BaseComponent,
     props: ['auth'],
     data () {
       return {}

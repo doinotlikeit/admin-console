@@ -1,3 +1,2 @@
-rootProject.name = 'prod-catalogue-ui'
-// include 'ui', 'server'
-include 'springboot-server'
+rootProject.name = 'admin-console'
+include 'vue-ui', 'springboot-server'

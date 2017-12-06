@@ -33,15 +33,17 @@
 </template>
 <script>
   import HeaderDropdown from './HeaderDropdown.vue'
-  import BaseComponent from '@/components/BaseComponent'
+  import * as main from '@/main'
 
   export default {
     name: 'header',
-    extends: BaseComponent,
     components: {
       HeaderDropdown
     },
     methods: {
+      logout () {
+        main.logout()
+      },
       sidebarToggle (e) {
         e.preventDefault()
         document.body.classList.toggle('sidebar-hidden')

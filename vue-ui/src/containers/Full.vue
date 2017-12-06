@@ -18,11 +18,9 @@
 <script>
 import nav from '../_nav'
 import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '../components/'
-import BaseComponent from '@/components/BaseComponent'
 
 export default {
   name: 'full',
-  extends: BaseComponent,
   components: {
     AppHeader,
     Sidebar,

@@ -5,8 +5,9 @@ import BootstrapVue from 'bootstrap-vue'
 import App from './App'
 import router from './router'
 import Simplert from 'vue2-simplert-plugin'
-import AuthService from './auth/AuthService'
-export const auth = new AuthService()
+import AuthService from '@/auth/AuthService'
+
+const auth = new AuthService()
 
 Vue.use(BootstrapVue)
 Vue.use(Simplert)
@@ -20,3 +21,27 @@ new Vue({
     App
   }
 })
+
+function handleAuthError (component, errMessage) {
+  displayError(component, errMessage, function () {
+    component.$router.replace('/welcome')
+  })
+}
+
+function logout () {
+  auth.logout()
+}
+
+function displayError (component, errMessage, onCloseCallback) {
+  var obj = {
+    isShown: true,
+    title: 'Error',
+    message: errMessage,
+    type: 'error',
+    onClose: onCloseCallback()
+  }
+  console.log('Alert ... ')
+  component.$Simplert.open(obj)
+}
+
+export {auth, handleAuthError, logout, displayError}

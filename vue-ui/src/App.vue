@@ -1,25 +1,28 @@
 <template>
-  <router-view :auth="auth"></router-view>
+  <div>
+    <simplert></simplert>
+    <router-view :auth="main.auth"></router-view>
+  </div>
 </template>
 
 <script>
-  import {auth} from './main'
+  import * as main from './main'
 
   export default {
     name: 'app',
     data () {
-      auth.authNotifier.on('authChange', authState => {
-        auth.authenticated = authState.authenticated
+      main.auth.authNotifier.on('authChange', authState => {
+        main.auth.authenticated = authState.authenticated
         if (authState.authenticated) {
-          console.log('===> App: Authenticated, redirect to /home. authenticate: ' + auth.isAuthenticated())
+          console.log('===> App: Authenticated, redirect to /home. authenticate: ' + main.auth.isAuthenticated())
           this.$router.replace('/home')
         } else if (!authState.authenticated) {
-          console.log('===> App: Not authenticated, redirect to /, authenticate: ' + auth.isAuthenticated())
-          this.$router.replace('/')
+          console.log('===> App: Not authenticated(logged out?), redirect to /welcome, authenticate: ' + main.auth.isAuthenticated())
+          this.$router.replace('/welcome')
         }
       })
       return {
-        auth
+        main
       }
     },
     methods: {},
