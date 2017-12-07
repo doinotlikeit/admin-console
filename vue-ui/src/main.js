@@ -44,4 +44,28 @@ function displayError (component, errMessage, onCloseCallback) {
   component.$Simplert.open(obj)
 }
 
-export {auth, handleAuthError, logout, displayError}
+function retrieveShortUserProfile (component, callback) {
+  auth.retrieveShortUserProfile((userProfile) => {
+    if (userProfile.err) {
+      displayError(userProfile.errMsg)
+    } else {
+      localStorage.setItem('shortUserProfile', userProfile)
+      callback(component, userProfile)
+    }
+  })
+}
+
+function retrieveFullUserProfile () {
+  let shortUserProfile = localStorage.getItem('shortUserProfile')
+  let jsonStream = JSON.parse(shortUserProfile)
+  auth.retrieveFullUserProfile(jsonStream.sub, (longUserProfile) => {
+    if (longUserProfile.err) {
+      displayError(longUserProfile.errMsg)
+    } else {
+      console.log(JSON.stringify(longUserProfile))
+      localStorage.setItem('longUserProfile', JSON.stringify(longUserProfile))
+    }
+  })
+}
+
+export {auth, retrieveShortUserProfile, retrieveFullUserProfile, handleAuthError, logout, displayError}

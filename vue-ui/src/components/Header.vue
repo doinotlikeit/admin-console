@@ -12,6 +12,12 @@
       <b-nav-item class="px-3">Users</b-nav-item>
       <b-nav-item class="px-3">Settings</b-nav-item>
     </b-nav>
+    <b-nav class="ml-auto">
+      <b-nav-item>
+        <span class="text-center">Welcome </span>
+        <span class="text-center" v-bind:text-content.prop="firstName"/>
+      </b-nav-item>
+    </b-nav>
     <b-nav is-nav-bar class="ml-auto">
       <b-nav-item class="d-md-down-none">
         <i class="icon-bell"></i>
@@ -23,8 +29,10 @@
       <b-nav-item class="d-md-down-none">
         <i class="icon-location-pin"></i>
       </b-nav-item>
-      <HeaderDropdown/>
+      <HeaderDropdown v-bind:avatar-link="avatarLink"/>
     </b-nav>
+    &nbsp;
+    &nbsp;
     <b-button size="sm" variant="primary" @click="logout()">Logout</b-button>
     <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" @click="asideToggle">
       <span class="navbar-toggler-icon"></span>
@@ -39,6 +47,22 @@
     name: 'header',
     components: {
       HeaderDropdown
+    },
+    data () {
+      return {
+        firstName: '',
+        avatarLink: 'woot'
+      }
+    },
+    created () {
+      this.$on('profileRetrievedEvent', function (jsonString) {
+        this.firstName = jsonString.given_name
+        this.avatarLink = jsonString.picture
+      })
+      main.retrieveShortUserProfile(this, function (component, jsonString) {
+        console.log('===> Header, short profile: ' + JSON.stringify(jsonString))
+        component.$emit('profileRetrievedEvent', jsonString)
+      })
     },
     methods: {
       logout () {

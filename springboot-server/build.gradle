@@ -32,6 +32,8 @@ bootRun {
 jar {
     baseName = "${project.properties.group}.${rootProject.name}"
     version = version
+
+    // Include Vue app artifacts built by the Webpack build process - "npm run build"
     from('../vue-ui/dist/') {
         include '**/*.*'
         into 'static'

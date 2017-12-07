@@ -16,30 +16,30 @@
 </template>
 
 <script>
-import nav from '../_nav'
-import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '../components/'
+  import nav from '../_nav'
+  import {Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb} from '../components/'
 
-export default {
-  name: 'full',
-  components: {
-    AppHeader,
-    Sidebar,
-    AppAside,
-    AppFooter,
-    Breadcrumb
-  },
-  data () {
-    return {
-      nav: nav.items
-    }
-  },
-  computed: {
-    name () {
-      return this.$route.name
+  export default {
+    name: 'full',
+    components: {
+      AppHeader,
+      Sidebar,
+      AppAside,
+      AppFooter,
+      Breadcrumb
     },
-    list () {
-      return this.$route.matched
+    data () {
+      return {
+        nav: nav.items
+      }
+    },
+    computed: {
+      name () {
+        return this.$route.name
+      },
+      list () {
+        return this.$route.matched
+      }
     }
   }
-}
 </script>
