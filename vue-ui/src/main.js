@@ -49,21 +49,19 @@ function retrieveShortUserProfile (component, callback) {
     if (userProfile.err) {
       displayError(userProfile.errMsg)
     } else {
-      localStorage.setItem('shortUserProfile', userProfile)
+      localStorage.setItem('shortUserProfile', JSON.stringify(userProfile))
       callback(component, userProfile)
     }
   })
 }
 
-function retrieveFullUserProfile () {
-  let shortUserProfile = localStorage.getItem('shortUserProfile')
-  let jsonStream = JSON.parse(shortUserProfile)
-  auth.retrieveFullUserProfile(jsonStream.sub, (longUserProfile) => {
+function retrieveFullUserProfile (component, callback) {
+  auth.retrieveFullUserProfile(JSON.parse(localStorage.getItem('shortUserProfile')).sub, (longUserProfile) => {
     if (longUserProfile.err) {
       displayError(longUserProfile.errMsg)
     } else {
-      console.log(JSON.stringify(longUserProfile))
-      localStorage.setItem('longUserProfile', JSON.stringify(longUserProfile))
+      localStorage.setItem('longUserProfile', longUserProfile)
+      callback(component, longUserProfile)
     }
   })
 }

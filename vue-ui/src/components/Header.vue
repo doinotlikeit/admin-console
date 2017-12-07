@@ -29,7 +29,7 @@
       <b-nav-item class="d-md-down-none">
         <i class="icon-location-pin"></i>
       </b-nav-item>
-      <HeaderDropdown v-bind:avatar-link="avatarLink"/>
+      <HeaderDropdown v-bind:user-profile="profile"/>
     </b-nav>
     &nbsp;
     &nbsp;
@@ -50,14 +50,16 @@
     },
     data () {
       return {
-        firstName: '',
-        avatarLink: 'woot'
+        firstName: 'Blah',
+        avatarLink: 'woot',
+        profile: Object
       }
     },
     created () {
       this.$on('profileRetrievedEvent', function (jsonString) {
         this.firstName = jsonString.given_name
         this.avatarLink = jsonString.picture
+        this.profile = jsonString
       })
       main.retrieveShortUserProfile(this, function (component, jsonString) {
         console.log('===> Header, short profile: ' + JSON.stringify(jsonString))
