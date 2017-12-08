@@ -9,6 +9,11 @@
 		- [Frontend](#frontend)
 		- [Backend](#backend)
 	- [Auth0 Setup](#auth0-setup)
+	- [Logging In](#logging-in)
+- [Admin Console](#admin-console)
+	- [LinkedIn Profile](#linkedin-profile)
+- [Auth0 integration](#auth0-integration)
+- [Spring Boot integration](#spring-boot-integration)
 - [References](#references)
 
 <!-- /TOC -->
@@ -156,13 +161,74 @@ You should see something like below:
 
 ```
 
-
 ----
 
 ## Auth0 Setup
-  2. Create an Auth0 [Account](https://auth0.com/signup)
+  1. Create an Auth0 [Account](https://auth0.com/signup)
+  2. Navigate to the (Dashboard)[https://manage.auth0.com/#/]
+  3. Select `Create Client` to add a new client. One Auth0 account can have several types of application clients in a multi-tenant setup
+  4. Note the `Client ID` and `Domain` values, these must be set as `clientId` and `domain` in the `auth0-variables.js` below
+  5. Select `APIs` and not the `API Audience` value, this goes in the `apiUrl` of the `auth0-variables.js` below
+  6. Set `Allowed Callback URLs` to `http://localhost:8080/callback`
+  7. Select `Connections -> Social` and enable the ones like you'd like to try. E.g LinkedIn
+  8. Create `vue-ui/src/auth/auth0-variables.js` file with its content as below.
+      ```
+      export const AUTH_CONFIG = {
+      clientId: '[YOUR CLIENT ID]',
+      domain: '[YOUR DOMAIN]',
+      callbackUrl: 'http://localhost:8080/callback',
+      apiUrl: [YOUR API URL]
+      }
+      ```
+
+  Below is the client that I created for this demo app.
+
+  ![](./docs/auth0-client.png)
+
+## Logging In
+Once Auth0 setup is done as above, you should be able to hit `Login` from the `Welcome` page. The browser does a redirect to the [Auth0 Hosted Login Page](https://auth0.com/docs/hosted-pages/login) where you will be able to register as a new user and login, or use any of the enabled social media logins.
+
+If you use LinkedIn, you'll see prompt below:
+  ![](./docs/auth0-client-auth.png)
+
+Once authorized, you should see Auth0's Hosted Login Page (AKA Lock). Use LinkedIn credentials to login.
+  ![](./docs/auth0-lock.png)
 
 
+----
+
+
+# Admin Console
+The Admin Console is pretty much the standard CoreUI template. For the this demo I [downloaded](https://github.com/mrholek/CoreUI-Vue) the free version and added Auth0 integration. I used the `Vue_Full_Project` sources and made the following changes:
+
+* Added
+  * src/auth directory for Auth0 integration
+  * src/views/WelcomeView.vue
+
+* Changed
+  * src/main.js
+  * src/components/Header.vue  
+  * src/components/HeaderDropdown.vue
+  * src/router/index.js
+
+On login, you should see the Admin Console's Dashboard:
+![](./docs/dashboard.png)
+
+## LinkedIn Profile
+If you authenticated via LinkedIn, your picture should display at the top right hand side. Click that, and you should see your LinkedIn Profile like below.
+![](./docs/dashboard-profile.png)
+
+
+----
+
+
+# Auth0 integration
+
+
+----
+
+
+# Spring Boot integration
 ----
 
 # References
@@ -173,6 +239,7 @@ You should see something like below:
 * [Auth0 Quick Start](https://auth0.com/docs/quickstarts)
 * [Auth0 Libraries](https://auth0.com/docs/libraries)
 * [Auth0 Javascript Library](https://auth0.com/docs/libraries/auth0js/v8)
+* [Auth0 Hosted Login Page, AKA Lock](https://auth0.com/docs/hosted-pages/login)
 * [Auth0 Vue.js Samples](https://github.com/auth0-samples/auth0-vue-samples)
 * [Bootstap Vue.js UI Coponents](https://bootstrap-vue.js.org/)
 * [Good Bootstrap 4 Reference](https://www.quackit.com/bootstrap/bootstrap_4/tutorial/)
