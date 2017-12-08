@@ -9,7 +9,7 @@ debugout.log
 *.log
 .DS_Store
 node_modules/
-springboot-server/build/
+/springboot-server/build/
 vue-ui/dist
 vue-ui/dist/*
 npm-debug.log
