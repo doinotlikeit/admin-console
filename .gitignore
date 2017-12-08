@@ -13,7 +13,7 @@ springboot-server/build/
 springboot-server/out/
 vue-ui/dist
 vue-ui/dist/*
-vue-ui/src/auth/auth0-variables.js
+auth0-variables.js
 npm-debug.log
 yarn-error.log
 test/unit/coverage

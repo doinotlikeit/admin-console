@@ -13,7 +13,10 @@
 - [Admin Console](#admin-console)
 	- [LinkedIn Profile](#linkedin-profile)
 - [Auth0 integration](#auth0-integration)
+	- [How it works](#how-it-works)
 - [Spring Boot integration](#spring-boot-integration)
+	- [Uber JAR](#uber-jar)
+- [Next Steps](#next-steps)
 - [References](#references)
 
 <!-- /TOC -->
@@ -165,7 +168,7 @@ You should see something like below:
 
 ## Auth0 Setup
   1. Create an Auth0 [Account](https://auth0.com/signup)
-  2. Navigate to the (Dashboard)[https://manage.auth0.com/#/]
+  2. Navigate to the [Dashboard](https://manage.auth0.com/#/)
   3. Select `Create Client` to add a new client. One Auth0 account can have several types of application clients in a multi-tenant setup
   4. Note the `Client ID` and `Domain` values, these must be set as `clientId` and `domain` in the `auth0-variables.js` below
   5. Select `APIs` and not the `API Audience` value, this goes in the `apiUrl` of the `auth0-variables.js` below
@@ -223,12 +226,69 @@ If you authenticated via LinkedIn, your picture should display at the top right 
 
 
 # Auth0 integration
+Auth0 integration is done via the [Auth0 Javascript library](https://auth0.com/docs/libraries/auth0js/v8) and the their Hosted Login Page (Lock).
+
+## How it works
+
+* When you hit the `Login` button on the Welcome page to login, the browser redirects (302) to the Hosted Page on Auth0 SaaS.
+
+* Auth0 then redirects (302) to LinkedIn for OAuth2 authentication. On successful authentication LinkedIn redirects (303) back to Auth0
+
+* Auth0 then does a POST to your supplied callback URL, e.g `http://localhost:8080` with the OAuth2 Access Token and an ID Token which is valid for a session and that can be used for subsequent API calls to Auth0. e.g, to retrieve user profile info. The duration of the session can be configured from the Auth0 admin console
+
+> A 301 redirect is a permanent redirect. It is cacheable and any bookmarks for this URL should be updated to point to the new URL. A 302 redirect is a temporary redirect. ... A 303 redirect is the same as a 302 except that the follow-up request is now explicitly changed to a GET request and no confirmation is required.
+
+
+Once a user logs in, their profile is saved on Auth0 securely. You can manage, track all user type activities offline, hosted, via Auth0 without having to build and maintain that functionality yourself.
 
 
 ----
 
 
 # Spring Boot integration
+Spring Boot is not required for running a Vue.js app, you can simply deploy on Express. However, by integrating with Spring Boot, you can use the embedded Tomcat instance to host the Vue.js Javascript application. When you compile and build the Spring Boot application, you have an uber JAR file that can be executed at the command line as a JVM application, or potentially easily deployed in a PaaS environment like Cloudfoundry.
+
+## Uber JAR
+
+1. Build the JAR file
+    ```
+    cd admin-console
+    ./gradlew clean install assemble
+    ```
+    This runs the `npm run build` command to compile, minify and package (production build) frontend components (Vue.js app) and places all of in the `vue-ui/dist` directory. Subsequently when the Spring Boot application is compiled and built, the Gradle jar task packs the `vue-ui/dist` contents into the uber jar. The Spring Boot application simply serves the `static/index.html` on startup.
+
+2. Run at the command line
+    ```
+    java -Dspring.profiles.active=local -jar springboot-server/build/libs/com.its.demo.prod-catalogue-ui-1.0.0-SNAPSHOT.jar
+    ```
+    or
+    ```
+    ./gradlew clean install assemble && java -Dspring.profiles.active=local -jar springboot-server/build/libs/com.its.demo.prod-catalogue-ui-1.0.0-SNAPSHOT.jar
+    ```
+
+----
+
+# Next Steps
+I plan to extend this demo and create a Product Catalog application.
+
+  * The UI will be the - Vue.js, Auth0 integration, social media authentication
+
+  * Product Catalog API
+    * Spring Boot App
+    * Apiary integration
+    * REST/JSON API
+
+  * Product Catalog Services
+    * Set of micro services that provided Product management, inventory, availability, pricing and other capabilities
+    * CQRS pattern
+    * Event Sourcing
+    * Spring Boot App
+    * Apiary integration
+    * REST/JSON API
+    * CouchDB, Elasticsearch
+    * Kafka
+    * Docker
+
 ----
 
 # References
